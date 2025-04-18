@@ -10,7 +10,7 @@ from enum import Enum
 # All stat can Jump to itself (Start a new command)
 # All stat can quit() to force exit (@TODO autosave needed)
 JUMP_TAB={
-    "RECORD":["NAV","ADD","INSERT","DELETE"],
+    "RECORD":["ADD","INSERT","DELETE"],
         "ADD":["ADD","INSERT","DELETE"],
         "INSERT":["INSERT","ADD","DELETE"],
         "DELETE":["DELETE","ADD","INSERT"],
@@ -144,6 +144,7 @@ def frame_welcome(win,height, width):
 
 def main_loop(win,height, width):
     
+    
     input_head = ' admin@GT-02 > '
     info_head = '│ Tips: '
     
@@ -167,9 +168,12 @@ def main_loop(win,height, width):
     
     while not exit_flag:
         
+        height, width = win.getmaxyx()
+        
         info_body = f"Current {cur_stat}, Leagal Command: {"".join(["<%s:%s>  "%(i,CMD_TIPS[i]) for i in JUMP_TAB[cur_stat]])} " 
     
-        if puber:
+        # @ayx pathlist add info
+        if puber: 
             cmds = puber.log[-max_cmd_rows:]
             # print("puber has been set")
         for i,cmd in enumerate(cmds):
